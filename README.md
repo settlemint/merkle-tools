@@ -1,6 +1,8 @@
-# A TypeScript fork of the merkle-tools package
+# A TypeScript merkle-tools toolkit
 
 Tools for creating Merkle trees, generating merkle proofs, and verification of merkle proofs.
+
+This a a fork of https://github.com/Tierion/merkle-tools, rewritten in TypeScript
 
 ## Installation
 
