@@ -1,15 +1,30 @@
 {
-  "name": "merkle-tools",
+  "name": "@settlemint/merkle-tools",
   "version": "1.4.0",
   "description": "Tools for creating merkle trees, generating merkle proofs, and verification of merkle proofs.",
-  "main": "merkletools.js",
+  "main": "dist/merkletools.js",
+  "types": "dist/merkletools.d.ts",
   "scripts": {
-    "test": "mocha test/*.js",
-    "benchmark": "node benchmark.js"
+    "build-ts": "tsc --declaration",
+    "watch-ts": "tsc -w",
+    "tslint": "tslint -c tslint.json -p tsconfig.json",
+    "pretest": "npm run tslint",
+    "start": "npm run serve",
+    "build": "npm run build-ts",
+    "serve": "node dist/server.js",
+    "watch": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\"  \"npm run watch-ts\" \"npm run watch-node\"",
+    "test": "jest --forceExit --coverage --verbose",
+    "debug": "npm run build && npm run watch-debug",
+    "serve-debug": "nodemon --inspect dist/server.js",
+    "watch-node": "nodemon dist/server.js",
+    "watch-debug": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run serve-debug\"",
+    "travis-deploy-once": "travis-deploy-once",
+    "semantic-release": "semantic-release",
+    "benchmark": "node dist/benchmark.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Tierion/merkle-tools.git"
+    "url": "git+https://github.com/settlemint/merkle-tools.git"
   },
   "keywords": [
     "merkle tree",
@@ -18,16 +33,30 @@
     "chainpoint"
   ],
   "author": "Jason Bukowski <jason@tierion.com> (https://tierion.com)",
+  "contributors": [
+    "Roderik van der Veer <roderik@settlemint.com> (https://settlemint.com)"
+  ],
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/Tierion/merkle-tools/issues"
+    "url": "https://github.com/settlemint/merkle-tools/issues"
   },
-  "homepage": "https://github.com/Tierion/merkle-tools#readme",
+  "homepage": "https://github.com/settlemint/merkle-tools#readme",
   "dependencies": {
-    "js-sha3": "^0.5.7"
+    "js-sha3": "^0.7.0"
   },
   "devDependencies": {
-    "benchmark": "^2.1.3",
-    "mocha": "^3.2.0"
+    "@types/jest": "^22.2.0",
+    "@types/node": "^9.6.0",
+    "concurrently": "^3.5.1",
+    "jest": "^22.4.3",
+    "nodemon": "^1.17.2",
+    "prettier": "^1.11.1",
+    "semantic-release": "^15.1.4",
+    "travis-deploy-once": "^4.4.1",
+    "ts-jest": "^22.4.2",
+    "ts-node": "^5.0.1",
+    "tslint": "^5.9.1",
+    "tslint-config-prettier": "^1.10.0",
+    "typescript": "^2.8.1"
   }
 }
