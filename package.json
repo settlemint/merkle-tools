@@ -19,8 +19,7 @@
     "watch-node": "nodemon dist/server.js",
     "watch-debug": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run serve-debug\"",
     "travis-deploy-once": "travis-deploy-once",
-    "semantic-release": "semantic-release",
-    "benchmark": "node dist/benchmark.js"
+    "semantic-release": "semantic-release"
   },
   "repository": {
     "type": "git",
@@ -31,6 +30,9 @@
     "merkle proof",
     "merkle",
     "chainpoint"
+  ],
+  "files": [
+    "dist"
   ],
   "author": "Jason Bukowski <jason@tierion.com> (https://tierion.com)",
   "contributors": [
