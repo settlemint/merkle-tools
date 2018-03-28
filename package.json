@@ -31,9 +31,6 @@
     "merkle",
     "chainpoint"
   ],
-  "files": [
-    "dist"
-  ],
   "author": "Jason Bukowski <jason@tierion.com> (https://tierion.com)",
   "contributors": [
     "Roderik van der Veer <roderik@settlemint.com> (https://settlemint.com)"
