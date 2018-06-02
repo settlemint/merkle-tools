@@ -11,8 +11,8 @@
 */
 import crypto from 'crypto';
 import { Message, sha3_224, sha3_256, sha3_384, sha3_512 } from 'js-sha3';
-import { isHex, stripHexPrefix, addHexPrefix } from './hex';
 import { isString } from 'util';
+import { addHexPrefix, isHex, stripHexPrefix } from './hex';
 
 export interface ITreeOptions {
   hashType: string;
