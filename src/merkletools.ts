@@ -12,11 +12,9 @@
 import crypto from 'crypto';
 import { Message, sha3_224, sha3_256, sha3_384, sha3_512 } from 'js-sha3';
 import { isString } from 'util';
-import { addHexPrefix, isHex, stripHexPrefix } from './hex';
 
 export interface ITreeOptions {
   hashType: string;
-  hexPrefix: boolean;
 }
 
 interface ITree {
@@ -32,18 +30,14 @@ export interface ISibling {
 
 export default class MerkleTools {
   private hashType: string;
-  private hexPrefix: boolean;
   private tree: ITree = {
     isReady: false,
     leaves: [],
     levels: []
   };
 
-  constructor(
-    treeOptions: ITreeOptions = { hashType: 'sha256', hexPrefix: false }
-  ) {
+  constructor(treeOptions: ITreeOptions = { hashType: 'sha256' }) {
     this.hashType = treeOptions.hashType;
-    this.hexPrefix = treeOptions.hexPrefix;
   }
 
   /**
@@ -67,15 +61,9 @@ export default class MerkleTools {
    */
   public addLeaf(value: string | Buffer, doHash: boolean = false) {
     this.tree.isReady = false;
-
-    if (isString(value) && isHex(stripHexPrefix(value))) {
-      value = stripHexPrefix(value);
-    }
-
     if (doHash) {
       value = this.hashFunction(value);
     }
-
     this.tree.leaves.push(this.getBuffer(value));
   }
 
@@ -184,20 +172,6 @@ export default class MerkleTools {
   }
 
   /**
-   * Returns the merkle root value as string for the tree
-   *
-   * @returns {string}
-   * @memberof MerkleTools
-   */
-  public getMerkleRootAsString(): string {
-    if (!this.tree.isReady || this.tree.levels.length === 0) {
-      return null;
-    }
-
-    return this.bufferToHexString(this.tree.levels[0][0]);
-  }
-
-  /**
    * Returns the proof for a leaf at the given index as an array of merkle siblings in hex format
    *
    * @param {number} index
@@ -231,9 +205,7 @@ export default class MerkleTools {
 
       const sibling: ISibling = {};
       const siblingPosition = isRightNode ? 'left' : 'right';
-      const siblingValue = this.bufferToHexString(
-        this.tree.levels[x][siblingIndex]
-      );
+      const siblingValue = this.tree.levels[x][siblingIndex].toString('hex');
       sibling[siblingPosition] = siblingValue;
       proof.push(sibling);
 
@@ -341,13 +313,26 @@ export default class MerkleTools {
     if (value instanceof Buffer) {
       // we already have a buffer, so return it
       return value;
-    } else if (isHex(value)) {
+    } else if (this.isHex(value)) {
       // the value is a hex string, convert to buffer and return
       return Buffer.from(value, 'hex');
     } else {
       // the value is neither buffer nor hex string, will not process this, throw error
       throw new Error("Bad hex value - '" + value + "'");
     }
+  }
+
+  /**
+   * Checks if the value is a hex
+   *
+   * @private
+   * @param {string} value the value to check
+   * @returns {boolean} if the value is a hex
+   * @memberof MerkleTools
+   */
+  private isHex(value: string): boolean {
+    const hexRegex = /^[0-9A-Fa-f]{2,}$/;
+    return hexRegex.test(value);
   }
 
   /**
@@ -416,18 +401,5 @@ export default class MerkleTools {
       }
     }
     return nodes;
-  }
-
-  /**
-   * Returns the given buffer as a string, hex prefixed depending on setting
-   * @private
-   * @param {Buffer} value
-   * @returns {string}
-   * @memberof MerkleTools
-   */
-  private bufferToHexString(value: Buffer) {
-    return this.hexPrefix
-      ? addHexPrefix(value.toString('hex'))
-      : value.toString('hex');
   }
 }
