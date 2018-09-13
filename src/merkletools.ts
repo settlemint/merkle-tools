@@ -10,8 +10,7 @@
 * limitations under the License.
 */
 import crypto from 'crypto';
-import { Message, sha3_224, sha3_256, sha3_384, sha3_512 } from 'js-sha3';
-import { isString } from 'util';
+import { sha3_224, sha3_256, sha3_384, sha3_512 } from 'js-sha3';
 
 export interface ITreeOptions {
   hashType: string;
@@ -91,7 +90,7 @@ export default class MerkleTools {
    * @returns {Buffer} the leaf
    * @memberof MerkleTools
    */
-  public getLeaf(index: number): Buffer {
+  public getLeaf(index: number): Buffer|null {
     if (index < 0 || index > this.tree.leaves.length - 1) {
       return null; // index is out of array bounds
     }
@@ -164,7 +163,7 @@ export default class MerkleTools {
    * @returns {Buffer}
    * @memberof MerkleTools
    */
-  public getMerkleRoot(): Buffer {
+  public getMerkleRoot(): Buffer|null {
     if (!this.tree.isReady || this.tree.levels.length === 0) {
       return null;
     }
@@ -178,7 +177,7 @@ export default class MerkleTools {
    * @returns {(Array<Buffer|ISibling>)}
    * @memberof MerkleTools
    */
-  public getProof(index: number): ISibling[] {
+  public getProof(index: number): ISibling[]|null {
     if (!this.tree.isReady) {
       return null;
     }
