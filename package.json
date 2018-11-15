@@ -41,21 +41,21 @@
   },
   "homepage": "https://github.com/settlemint/merkle-tools#readme",
   "dependencies": {
-    "js-sha3": "^0.7.0"
+    "js-sha3": "^0.8.0"
   },
   "devDependencies": {
-    "@types/jest": "^22.2.0",
-    "@types/node": "^9.6.0",
-    "concurrently": "^3.5.1",
-    "jest": "^22.4.3",
-    "nodemon": "^1.17.2",
-    "prettier": "^1.11.1",
-    "semantic-release": "^15.1.4",
-    "travis-deploy-once": "^4.4.1",
-    "ts-jest": "^22.4.2",
-    "ts-node": "^5.0.1",
-    "tslint": "^5.9.1",
-    "tslint-config-prettier": "^1.10.0",
-    "typescript": "^2.8.1"
+    "@types/jest": "^23.3.9",
+    "@types/node": "^10.12.8",
+    "concurrently": "^4.0.1",
+    "jest": "^23.6.0",
+    "nodemon": "^1.18.6",
+    "prettier": "^1.15.2",
+    "semantic-release": "^15.12.0",
+    "travis-deploy-once": "^5.0.9",
+    "ts-jest": "^23.10.4",
+    "ts-node": "^7.0.1",
+    "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.16.0",
+    "typescript": "^3.1.6"
   }
 }
